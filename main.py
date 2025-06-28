@@ -27,7 +27,19 @@ class Person:
         self.name = name
         self.surname = surname
         self.sex = sex
-        self.age = age
+        self.__age = None
+        self.age = age  # Use setter for validation
+
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, value):
+        if 0 <= value <= 150:
+            self.__age = value
+        else:
+            print("Age must be between 0 and 150. Value not set.")
 
     def get_info(self):
         print(
@@ -80,9 +92,11 @@ class Guard(Person):
         print(f"Guard {self.name} is patrolling the prison.")
 
 
-person1 = Person("Edil", "Smith", "male", 12)
-prisoner2 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
+person1 = Person("Michal", "Zabka", "male", 120)
+prisoner1 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
+prisoner2 = Prisoner("Shawn", "Auchan", "male", 25, 2, 3, "Burglary")
 guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
+guard2 = Guard("Sarah", "Netto", "female", 35, 102, "Captain")
 
 person1.get_info()
 prisoner2.get_info()
@@ -91,7 +105,9 @@ prisoner2.work()
 guard1.work()
 
 shawshank = Prison("Shawshank")
+shawshank.add_prisoner(prisoner1)
 shawshank.add_prisoner(prisoner2)
 shawshank.add_guard(guard1)
+shawshank.add_guard(guard2)
 shawshank.get_prisoners()
 shawshank.get_guards()
