@@ -58,11 +58,8 @@ class Prisoner(Person):
         self.commited_crime = commited_crime
 
     def get_info(self):
+        super().get_info()
         print(
-            f"name: {self.name}\n"
-            f"surname: {self.surname}\n"
-            f"sex: {self.sex}\n"
-            f"age: {self.age}\n"
             f"prisoner_id: {self.prisoner_id}\n"
             f"sentence_years: {self.sentence_years}\n"
             f"commited_crime: {self.commited_crime}\n"
@@ -79,11 +76,8 @@ class Guard(Person):
         self.rank = rank
 
     def get_info(self):
+        super().get_info()
         print(
-            f"name: {self.name}\n"
-            f"surname: {self.surname}\n"
-            f"sex: {self.sex}\n"
-            f"age: {self.age}\n"
             f"guard_id: {self.guard_id}\n"
             f"rank: {self.rank}\n"
         )
