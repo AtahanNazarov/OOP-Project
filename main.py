@@ -10,6 +10,15 @@ class Prison:
     def add_prisoner(self, prisoner):
         self.prisoners.append(prisoner)
 
+    def remove_prisoner(self, prisoner):
+        if prisoner in self.prisoners:
+            self.prisoners.remove(prisoner)
+            print(
+                f"Prisoner {prisoner.name} {prisoner.surname} has been removed from {self.name}.")
+        else:
+            print(
+                f"Prisoner {prisoner.name} {prisoner.surname} not found in {self.name}.")
+
     def get_prisoners(self):
         for prisoner in self.prisoners:
             prisoner.get_info()
@@ -70,7 +79,7 @@ class Prisoner(Person):
     def work(self):
         print(f"Prisoner {self.name} is doing prison work.")
 
-    def year_passed(self):
+    def year_passed(self, prison=None):
         if self.years_served < self.sentence_years:
             self.years_served += 1
             years_left = self.sentence_years - self.years_served
@@ -79,6 +88,8 @@ class Prisoner(Person):
                     f"Congrats! Only {years_left} year(s) left to go for {self.name} {self.surname}.")
             else:
                 print(f"{self.name} {self.surname} is now free!")
+                if prison is not None:
+                    prison.remove_prisoner(self)
 
 
 class Guard(Person):
@@ -118,3 +129,4 @@ shawshank.add_guard(guard1)
 shawshank.add_guard(guard2)
 shawshank.get_prisoners()
 shawshank.get_guards()
+shawshank.remove_prisoner(prisoner2)
