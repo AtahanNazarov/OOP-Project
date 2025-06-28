@@ -46,6 +46,9 @@ class Prisoner(Person):
             f"commited_crime: {self.commited_crime}\n"
         )
 
+    def work(self):
+        print(f"Prisoner {self.name} is doing prison work.")
+
 
 class Guard(Person):
     def __init__(self, name: str, surname: str, sex: Literal["male", "female"], age: int, guard_id: int, rank: Literal["Officer", "Sergeant", "Lieutenant", "Captain", "Warden"]):
@@ -62,6 +65,9 @@ class Guard(Person):
             f"guard_id: {self.guard_id}\n"
             f"rank: {self.rank}\n"
         )
+
+    def work(self):
+        print(f"Guard {self.name} is patrolling the prison.")
 
 
 person1 = Person("Edil", "Smith", "male", 12)
