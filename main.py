@@ -47,8 +47,27 @@ class Prisoner(Person):
         )
 
 
-p1 = Person("Edil", "Smith", "male", 12)
-p2 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
+class Guard(Person):
+    def __init__(self, name: str, surname: str, sex: Literal["male", "female"], age: int, guard_id: int, rank: Literal["Officer", "Sergeant", "Lieutenant", "Captain", "Warden"]):
+        super().__init__(name, surname, sex, age)
+        self.guard_id = guard_id
+        self.rank = rank
 
-p1.get_info()
-p2.get_info()
+    def get_info(self):
+        print(
+            f"name: {self.name}\n"
+            f"surname: {self.surname}\n"
+            f"sex: {self.sex}\n"
+            f"age: {self.age}\n"
+            f"guard_id: {self.guard_id}\n"
+            f"rank: {self.rank}\n"
+        )
+
+
+person1 = Person("Edil", "Smith", "male", 12)
+prisoner2 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
+guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
+
+person1.get_info()
+prisoner2.get_info()
+guard1.get_info()
