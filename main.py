@@ -28,7 +28,7 @@ class Person:
         self.surname = surname
         self.sex = sex
         self.__age = None
-        self.age = age  # Use setter for validation
+        self.age = age  # use setter for validation
 
     @property
     def age(self):
@@ -56,6 +56,7 @@ class Prisoner(Person):
         self.prisoner_id = prisoner_id
         self.sentence_years = sentence_years
         self.commited_crime = commited_crime
+        self.years_served = 0
 
     def get_info(self):
         super().get_info()
@@ -63,10 +64,21 @@ class Prisoner(Person):
             f"prisoner_id: {self.prisoner_id}\n"
             f"sentence_years: {self.sentence_years}\n"
             f"commited_crime: {self.commited_crime}\n"
+            f"years_served: {self.years_served}\n"
         )
 
     def work(self):
         print(f"Prisoner {self.name} is doing prison work.")
+
+    def year_passed(self):
+        if self.years_served < self.sentence_years:
+            self.years_served += 1
+            years_left = self.sentence_years - self.years_served
+            if years_left > 0:
+                print(
+                    f"Congrats! Only {years_left} year(s) left to go for {self.name} {self.surname}.")
+            else:
+                print(f"{self.name} {self.surname} is now free!")
 
 
 class Guard(Person):
@@ -97,6 +109,7 @@ prisoner2.get_info()
 guard1.get_info()
 prisoner2.work()
 guard1.work()
+prisoner2.year_passed()
 
 shawshank = Prison("Shawshank")
 shawshank.add_prisoner(prisoner1)
