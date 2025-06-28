@@ -56,6 +56,13 @@ class Age:
     def get_age(self):
         return self.age
 
+    def birthday(self):
+        self.age+= 1
+        print(
+            f"Happy birthday!"
+            f"You are now aged {self.age}!"
+        )
+
 
 # age test
 old_guy = Age()
@@ -65,4 +72,25 @@ print(old_guy.get_age())
 old_guy.set_age(140)
 print(old_guy.get_age())
 
+old_guy.birthday()
+print(old_guy.get_age())
+
 old_guy.set_age(151)
+
+
+class Person:
+    def __init__(self, name: str, surname: str, age: Age):
+        self.name = name
+        self.surname = surname
+        self.age = age
+        
+     # getter
+    def get_age(self):
+        return self.age
+
+atakhan_age = Age()  
+atakhan_age.set_age(21)
+ 
+atakhan = Person("Atakhan", "Nazarov", atakhan_age)
+
+print("Atakhan's age:", atakhan.get_age().get_age())
