@@ -1,15 +1,25 @@
 from typing import Literal
 
-# class Prison:
-#     def __init__(self, name: str, capacity: int):
-#         self.name = name
-#         self.capacity = capacity
 
-#     def add_prisoner(self, prisoner_: str):
-#         self.prisoner_name = prisoner_name
+class Prison:
+    def __init__(self, name: str):
+        self.name = name
+        self.guards = []
+        self.prisoners = []
 
-# def get_name(self):
-# return self.name
+    def add_prisoner(self, prisoner):
+        self.prisoners.append(prisoner)
+
+    def get_prisoners(self):
+        for prisoner in self.prisoners:
+            prisoner.get_info()
+
+    def add_guard(self, guard):
+        self.guards.append(guard)
+
+    def get_guards(self):
+        for guard in self.guards:
+            guard.get_info()
 
 
 class Person:
@@ -77,3 +87,11 @@ guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
 person1.get_info()
 prisoner2.get_info()
 guard1.get_info()
+prisoner2.work()
+guard1.work()
+
+shawshank = Prison("Shawshank")
+shawshank.add_prisoner(prisoner2)
+shawshank.add_guard(guard1)
+shawshank.get_prisoners()
+shawshank.get_guards()
