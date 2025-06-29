@@ -1,5 +1,5 @@
 import unittest
-from main import Person
+from main import Person, Prisoner, Guard
 
 
 class TestPerson(unittest.TestCase):
@@ -19,9 +19,31 @@ class TestPerson(unittest.TestCase):
         self.assertNotEqual(person.age, 600)
 
     def test_set_age(self):
-        person = Person("Tom", "Ford", "male", 63)
-        person.age = 40
-        self.assertEqual(person.age, 64)
+        person = Person("Tom", "Ford", "male", 40)
+        person.age = 63
+        self.assertEqual(person.age, 63)
+
+    def test_sex_literal(self):
+        person = Person("Charlie", "Day", "male", 30)
+        self.assertIn(person.sex, ["male", "female"])
+
+
+class TestPrisoner(unittest.TestCase):
+    def test_prisoner_creation(self):
+        prisoner = Prisoner("Walter", "White", "male", 50, 101, 50, "Drugs")
+        self.assertEqual(prisoner.name, "Walter")
+        self.assertEqual(prisoner.sentence_years, 5)
+        self.assertEqual(prisoner.commited_crime, "Drugs")
+
+
+class TestGuard(unittest.TestCase):
+    def test_guard_creation(self):
+        guard = Guard("Alan", "Turing", "male", 41, 201, "Warden")
+        self.assertEqual(guard.rank, "Warden")
+
+    def test_guard_id(self):
+        guard = Guard("Jane", "Doe", "female", 45, 201, "Warden")
+        self.assertEqual(guard.guard_id, 201)
 
 
 if __name__ == "__main__":
