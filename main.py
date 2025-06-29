@@ -30,6 +30,11 @@ class Prison:
         for guard in self.guards:
             guard.get_info()
 
+    def summary(self):
+        print(f"Prison: {self.name}")
+        print(f"Total prisoners: {len(self.prisoners)}")
+        print(f"Total guards: {len(self.guards)}")
+
     def year_passed_all(self):
         for prisoner in self.prisoners:
             prisoner.year_passed(self)
@@ -113,25 +118,43 @@ class Guard(Person):
         print(f"Guard {self.name} is patrolling the prison.")
 
 
+# example usage
+shawshank = Prison("Shawshank")
+shawshank.summary()
+
+
 person1 = Person("Michal", "Zabka", "male", 120)
+person1.get_info()
+
+
 prisoner1 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
 prisoner2 = Prisoner("Shawn", "Auchan", "male", 25, 2, 3, "Burglary")
+prisoner2.get_info()
+
+
 guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
 guard2 = Guard("Sarah", "Netto", "female", 35, 102, "Captain")
-
-person1.get_info()
-prisoner2.get_info()
 guard1.get_info()
-prisoner2.work()
-guard1.work()
-prisoner2.year_passed()
 
-shawshank = Prison("Shawshank")
+
 shawshank.add_prisoner(prisoner1)
 shawshank.add_prisoner(prisoner2)
+shawshank.get_prisoners()
+
 shawshank.add_guard(guard1)
 shawshank.add_guard(guard2)
-shawshank.get_prisoners()
 shawshank.get_guards()
+
+
+shawshank.summary()
+
+
+prisoner2.work()
+guard1.work()
+
+
 shawshank.remove_prisoner(prisoner2)
 shawshank.year_passed_all()
+
+
+shawshank.summary()
