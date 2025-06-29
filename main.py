@@ -37,6 +37,7 @@ class Prison:
         print(f"Total guards: {len(self.guards)}")
 
     def year_passed_all(self):
+        # advances the year for all prisoners in this prison
         for prisoner in self.prisoners:
             prisoner.year_passed(self)
 
@@ -47,7 +48,7 @@ class Person:
         self.surname = surname
         self.sex = sex
         self.__age = None
-        self.age = age  # use setter for validation
+        self.age = age
 
     @property
     def age(self):
@@ -75,7 +76,7 @@ class Prisoner(Person):
         self.prisoner_id = prisoner_id
         self.sentence_years = sentence_years
         self.commited_crime = commited_crime
-        self.years_served = 0
+        self.years_served = 0  # starts with 0 years served
 
     def get_info(self):
         super().get_info()
@@ -90,6 +91,7 @@ class Prisoner(Person):
         print(f"Prisoner {self.name} is doing prison work.")
 
     def year_passed(self, prison=None):
+        # increases years served by 1 and checks if prisoner has completed sentence
         if self.years_served < self.sentence_years:
             self.years_served += 1
             years_left = self.sentence_years - self.years_served
@@ -102,13 +104,14 @@ class Prisoner(Person):
                     prison.remove_prisoner(self)
 
     def try_escape(self, prison=None):
+        # prisoner attempts to escape with a 10% success chance
         chance = random.random()
         if chance < 0.1:
             print(f"{self.name} {self.surname} has escaped from prison!!")
             if prison is not None:
                 prison.remove_prisoner(self)
         else:
-            self.sentence_years += 3
+            self.sentence_years += 3  # failed escape adds 3 years to sentence
             print(f"{self.name} {self.surname} failed to escape! 3 years added to sentence. New sentence: {self.sentence_years} years.")
 
 
@@ -129,6 +132,7 @@ class Guard(Person):
         print(f"Guard {self.name} is patrolling the prison.")
 
     def promote(self):
+        # promotes the guard to the next rank if not already at highest rank
         ranks = ["Officer", "Sergeant", "Lieutenant", "Captain", "Warden"]
         current_index = ranks.index(self.rank)
         if current_index < len(ranks) - 1:
@@ -140,25 +144,22 @@ class Guard(Person):
 
 
 # example usage
+
 shawshank = Prison("Shawshank")
 shawshank.summary()
 
-
 person1 = Person("Michal", "Zabka", "male", 120)
 person1.get_info()
-
 
 prisoner1 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
 prisoner2 = Prisoner("Shawn", "Auchan", "male", 25, 2, 3, "Burglary")
 prisoner3 = Prisoner("Sarah", "Carrefour", "female", 28, 3, 4, "Fraud")
 prisoner2.get_info()
 
-
 guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
 guard2 = Guard("Sarah", "Netto", "female", 35, 102, "Captain")
 guard3 = Guard("Emma", "Aldi", "female", 30, 103, "Lieutenant")
 guard1.get_info()
-
 
 shawshank.add_prisoner(prisoner1)
 shawshank.add_prisoner(prisoner2)
@@ -170,9 +171,7 @@ shawshank.add_guard(guard2)
 shawshank.add_guard(guard3)
 shawshank.get_guards()
 
-
 shawshank.summary()
-
 
 prisoner2.work()
 guard1.work()
@@ -183,9 +182,7 @@ guard2.get_info()
 prisoner2.try_escape(shawshank)
 prisoner2.get_info()
 
-
 shawshank.remove_prisoner(prisoner2)
 shawshank.year_passed_all()
-
 
 shawshank.summary()
