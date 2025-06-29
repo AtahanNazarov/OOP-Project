@@ -1,4 +1,5 @@
 from typing import Literal
+import random
 
 
 class Prison:
@@ -100,6 +101,16 @@ class Prisoner(Person):
                 if prison is not None:
                     prison.remove_prisoner(self)
 
+    def try_escape(self, prison=None):
+        chance = random.random()
+        if chance < 0.1:
+            print(f"{self.name} {self.surname} has escaped from prison!!")
+            if prison is not None:
+                prison.remove_prisoner(self)
+        else:
+            self.sentence_years += 3
+            print(f"{self.name} {self.surname} failed to escape! 3 years added to sentence. New sentence: {self.sentence_years} years.")
+
 
 class Guard(Person):
     def __init__(self, name: str, surname: str, sex: Literal["male", "female"], age: int, guard_id: int, rank: Literal["Officer", "Sergeant", "Lieutenant", "Captain", "Warden"]):
@@ -117,6 +128,16 @@ class Guard(Person):
     def work(self):
         print(f"Guard {self.name} is patrolling the prison.")
 
+    def promote(self):
+        ranks = ["Officer", "Sergeant", "Lieutenant", "Captain", "Warden"]
+        current_index = ranks.index(self.rank)
+        if current_index < len(ranks) - 1:
+            self.rank = ranks[current_index + 1]
+            print(
+                f"Congrats! {self.name} {self.surname} has been promoted to {self.rank}!")
+        else:
+            print(f"{self.name} {self.surname} is already at the highest rank!")
+
 
 # example usage
 shawshank = Prison("Shawshank")
@@ -129,20 +150,24 @@ person1.get_info()
 
 prisoner1 = Prisoner("John", "Biedronka", "male", 30, 1, 5, "Robbery")
 prisoner2 = Prisoner("Shawn", "Auchan", "male", 25, 2, 3, "Burglary")
+prisoner3 = Prisoner("Sarah", "Carrefour", "female", 28, 3, 4, "Fraud")
 prisoner2.get_info()
 
 
 guard1 = Guard("Mike", "Lidl", "male", 40, 101, "Warden")
 guard2 = Guard("Sarah", "Netto", "female", 35, 102, "Captain")
+guard3 = Guard("Emma", "Aldi", "female", 30, 103, "Lieutenant")
 guard1.get_info()
 
 
 shawshank.add_prisoner(prisoner1)
 shawshank.add_prisoner(prisoner2)
+shawshank.add_prisoner(prisoner3)
 shawshank.get_prisoners()
 
 shawshank.add_guard(guard1)
 shawshank.add_guard(guard2)
+shawshank.add_guard(guard3)
 shawshank.get_guards()
 
 
@@ -151,6 +176,12 @@ shawshank.summary()
 
 prisoner2.work()
 guard1.work()
+
+guard2.promote()
+guard2.get_info()
+
+prisoner2.try_escape(shawshank)
+prisoner2.get_info()
 
 
 shawshank.remove_prisoner(prisoner2)

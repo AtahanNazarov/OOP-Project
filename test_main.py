@@ -1,5 +1,6 @@
 import unittest
-from main import Person, Prisoner, Guard
+import random
+from main import Prison, Person, Prisoner, Guard
 
 
 class TestPerson(unittest.TestCase):
@@ -54,6 +55,35 @@ class TestPrisoner(unittest.TestCase):
         prisoner = Prisoner("Walter", "White", "male", 50, 101, 50, "Drugs")
         # this should pass, crime is Drugs
         self.assertNotEqual(prisoner.commited_crime, "Robbery")
+
+    def test_try_escape_success_or_fail(self):
+        prisoner = Prisoner("Walter", "White", "male", 50, 101, 10, "Drugs")
+        prison = Prison("Test Prison")
+        prison.add_prisoner(prisoner)
+        # Patch random.random to always return 0.05 (escape succeeds)
+
+        def always_escape():
+            return 0.05
+
+        def always_fail():
+            return 0.5
+
+        # Use them in your test:
+        original_random = random.random
+        random.random = always_escape
+        prisoner.try_escape(prison)
+        # Should be removed from prison
+        self.assertNotIn(prisoner, prison.prisoners)
+
+        # Patch random.random to always return 0.5 (escape fails)
+        prison.add_prisoner(prisoner)
+        random.random = always_fail
+        prisoner.try_escape(prison)
+        self.assertIn(prisoner, prison.prisoners)  # Should still be in prison
+        self.assertEqual(prisoner.sentence_years, 13)  # 3 years added
+
+        # Restore original random
+        random.random = original_random
 
 
 class TestGuard(unittest.TestCase):
