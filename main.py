@@ -30,6 +30,10 @@ class Prison:
         for guard in self.guards:
             guard.get_info()
 
+    def year_passed_all(self):
+        for prisoner in self.prisoners:
+            prisoner.year_passed(self)
+
 
 class Person:
     def __init__(self, name: str, surname: str, sex: Literal["male", "female"], age: int):
@@ -130,3 +134,4 @@ shawshank.add_guard(guard2)
 shawshank.get_prisoners()
 shawshank.get_guards()
 shawshank.remove_prisoner(prisoner2)
+shawshank.year_passed_all()
